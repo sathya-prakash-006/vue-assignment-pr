@@ -1,0 +1,18 @@
+{
+  "user": [
+    {
+      "name": "test3",
+      "email": "new@gmail.com",
+      "date": "2021-11-21",
+      "password": "test2",
+      "id": 2
+    },
+    {
+      "name": "sathya prakash",
+      "email": "sathya@gmail.com",
+      "date": "2021-11-22",
+      "password": "123",
+      "id": 3
+    }
+  ]
+}
