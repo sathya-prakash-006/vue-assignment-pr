@@ -9,15 +9,10 @@ describe("Login.vue", () => {
   let actions: any;
   let store: any;
   let wrapper: any;
+  let errors: Array<string> = [];
 
   const mockRouter = {
-    $route: {
-      name: "Login",
-    },
-    $router: {
-      replace: jest.fn(),
-      push: jest.fn(),
-    },
+    push: jest.fn(),
   };
 
   beforeEach(() => {
@@ -30,7 +25,7 @@ describe("Login.vue", () => {
 
     store = new Vuex.Store({
       modules: {
-        Counter2: {
+        User: {
           actions,
           namespaced: true,
         },
@@ -38,11 +33,15 @@ describe("Login.vue", () => {
     });
   });
 
-  // wrapper = mount(Login);
   wrapper = mount(Login, {
     store,
     localVue,
-    mocks: mockRouter,
+    props: {
+      errors: [],
+    },
+    mocks: {
+      $router: mockRouter,
+    },
   });
 
   it("it should have Login page on mount'", () => {
@@ -92,6 +91,7 @@ describe("Login.vue", () => {
     await wrapper.find('input[type="password"]').setValue(password);
     await wrapper.find("form").trigger("submit.prevent");
 
+    //expect(actions.login).toHaveBeenCalled();
     expect(wrapper.emitted("submit")[0][0]).toStrictEqual({
       email,
       password,
@@ -99,7 +99,6 @@ describe("Login.vue", () => {
   });
 
   xit("on submitting redirect to dashbord", async () => {
-    mockRouter.$route.name = "Login";
     const email = "sathya@gmail.com";
     const password = "123";
 
@@ -107,9 +106,7 @@ describe("Login.vue", () => {
     await wrapper.find('input[type="password"]').setValue(password);
     await wrapper.find("form").trigger("submit.prevent");
 
-    const routerSpy = jest.spyOn(wrapper.vm.$router, "push");
-    expect(routerSpy).toHaveBeenCalledWith({
-      name: "Home",
-    });
+    expect(mockRouter.push).toHaveBeenCalledTimes(1);
+    expect(mockRouter.push).toHaveBeenCalledWith("/home");
   });
 });

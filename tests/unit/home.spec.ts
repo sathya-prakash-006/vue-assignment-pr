@@ -34,7 +34,7 @@ describe("Home.vue", () => {
     expect(title.text()).toBe("PROFILE DETAILS");
   });
 
-  it("when button clicked it should redirect to home", async () => {
+  it("it should redirect to login page", async () => {
     const mockRouter = {
       replace: jest.fn(),
       push: jest.fn(),
@@ -48,10 +48,30 @@ describe("Home.vue", () => {
       },
     });
 
-    await wrapper.find("#exit").trigger("click");
+    await wrapper.find("#exitLog").trigger("click");
 
     expect(mockRouter.push).toHaveBeenCalledTimes(1);
     expect(mockRouter.push).toHaveBeenCalledWith("/login");
+  });
+
+  it("it should redirect to register page", async () => {
+    const mockRouter = {
+      replace: jest.fn(),
+      push: jest.fn(),
+    };
+
+    const wrapper = mount(Home, {
+      store,
+      localVue,
+      mocks: {
+        $router: mockRouter,
+      },
+    });
+
+    await wrapper.find("#exitReg").trigger("click");
+
+    expect(mockRouter.push).toHaveBeenCalledTimes(1);
+    expect(mockRouter.push).toHaveBeenCalledWith("/register");
   });
 });
 

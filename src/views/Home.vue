@@ -45,7 +45,14 @@
         </form>
       </div>
       <div>
-        <button class="exit-btn btn" @click="exit()" id="exit">EXIT</button>
+        <button class="exit-btn btn" @click="exit()" id="exitLog">
+          GO TO LOGIN
+        </button>
+      </div>
+      <div>
+        <button class="exit-btn btn" @click="exitReg()" id="exitReg">
+          GO TO REGISTER
+        </button>
       </div>
     </div>
   </div>
@@ -86,6 +93,10 @@ export default class Home extends Vue {
   }
   exit(): void {
     this.$router.push("/login");
+  }
+
+  exitReg(): void {
+    this.$router.push("/register");
   }
 
   submit(): void {
