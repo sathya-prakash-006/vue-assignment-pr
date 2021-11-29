@@ -1,5 +1,5 @@
 <template>
-  <section class="summary-cont">
+  <section class="summary-cont" id="profile">
     <span>
       <p data-test="title">Account Number</p>
       <h5 data-test="account">278132856379</h5>
@@ -20,8 +20,6 @@ import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class ProfileSummary extends Vue {}
 </script>
-
-
 
 <style scoped>
 .summary-cont,

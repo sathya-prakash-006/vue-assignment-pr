@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" id="register">
     <div class="left-container">
       <div class="logo-container"></div>
       <h1 data-test="title">Micro Bank</h1>
@@ -69,7 +69,6 @@
   </div>
 </template>
 
-
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 import { ProfileUser } from "../utility/types";
@@ -111,8 +110,6 @@ export default class Register extends Vue {
   }
 }
 </script>
-
-
 
 <style scoped>
 .container {

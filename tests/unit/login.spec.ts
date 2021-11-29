@@ -15,6 +15,7 @@ describe("Login.vue", () => {
       name: "Login",
     },
     $router: {
+      replace: jest.fn(),
       push: jest.fn(),
     },
   };
@@ -44,6 +45,10 @@ describe("Login.vue", () => {
     mocks: mockRouter,
   });
 
+  it("it should have Login page on mount'", () => {
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.find("#login").exists()).toBe(true);
+  });
   it("it should contain title 'Micro Bank'", () => {
     const title = wrapper.get('[data-test="title"]');
 

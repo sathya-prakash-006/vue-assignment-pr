@@ -6,6 +6,11 @@ describe("Register.vue", () => {
   beforeEach(() => {
     wrapper = mount(Register);
   });
+
+  it("it should have Register page on mount'", () => {
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.find("#register").exists()).toBe(true);
+  });
   it("it should contain title 'Mocro Bank'", () => {
     const title = wrapper.get('[data-test="title"]');
 
