@@ -6,19 +6,19 @@ describe("Register.vue", () => {
   beforeEach(() => {
     wrapper = mount(Register);
   });
-  xit("it should contain title 'Mocro Bank'", () => {
+  it("it should contain title 'Mocro Bank'", () => {
     const title = wrapper.get('[data-test="title"]');
 
     expect(title.text()).toBe("Micro Bank");
   });
 
-  xit("it should contain form title 'Create an Account'", () => {
+  it("it should contain form title 'Create an Account'", () => {
     const createaccount = wrapper.get('[data-test="create-account"]');
 
     expect(createaccount.text()).toBe("Create an Account");
   });
 
-  xit("it should not render a error block", () => {
+  it("it should not render a error block", () => {
     const wrapper = mount(Register, {
       data() {
         return {
@@ -29,5 +29,51 @@ describe("Register.vue", () => {
 
     const errorLink = wrapper.find("error");
     expect(errorLink.exists()).toBe(false);
+  });
+
+  it("input name'", async () => {
+    const input = wrapper.get('[data-test="name"]');
+    await input.setValue("sathya");
+
+    expect(input.element.value).toBe("sathya");
+  });
+  it("input email", async () => {
+    const input = wrapper.get('[data-test="email"]');
+    await input.setValue("sathya@gmail.com");
+
+    expect(input.element.value).toBe("sathya@gmail.com");
+  });
+
+  it("input password", async () => {
+    const input = wrapper.get('[data-test="password"]');
+    await input.setValue("123");
+
+    expect(input.element.value).toBe("123");
+  });
+
+  it("on submitting form event should trigger", async () => {
+    const name = "sathya";
+    const email = "sathya@gmail.com";
+    const date = "";
+    const password = "123";
+    const confirmpassword = "123";
+
+    await wrapper.get('[data-test="name"]').setValue(name);
+    await wrapper.get('[data-test="email"]').setValue(email);
+    await wrapper.find('input[type="date"]').setValue(date);
+    await wrapper.get('[data-test="password"]').setValue(password);
+    await wrapper
+      .get('[data-test="confirmpassword"]')
+      .setValue(confirmpassword);
+
+    await wrapper.find("form").trigger("submit.prevent");
+
+    expect(wrapper.emitted("submit")[0][0]).toStrictEqual({
+      name,
+      email,
+      date,
+      password,
+      confirmpassword,
+    });
   });
 });

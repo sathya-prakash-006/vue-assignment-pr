@@ -1,47 +1,37 @@
 <template>
-  <div class="home">
-    <nav-bar :name="userDetails.name[0]"></nav-bar>
-    <div data-test="title">
-      <h1>PROFILE DETAILS</h1>
-    </div>
-    <section class="summary-cont">
-      <span>
-        <p>Account Number</p>
-        <h5>{{ AccoountNum() }}</h5>
-      </span>
-      <span>
-        <p>Income</p>
-        <h5>$2478</h5>
-      </span>
-      <span>
-        <p>Spends</p>
-        <h5>4275</h5>
-      </span>
-    </section>
+  <div>
+    <div>
+      <div v-if="userDetails">
+        <nav-bar name="S"></nav-bar>
+      </div>
+      <div>
+        <h1 id="title">PROFILE DETAILS</h1>
+      </div>
+      <profile-summary></profile-summary>
 
-    <section v-if="userDetails" class="profile">
-      <span>
-        <p>Name</p>
-        <h4>{{ userDetails.name.toUpperCase() }}</h4>
-      </span>
-      <span>
-        <p>Email</p>
-        <h4>{{ userDetails.email }}</h4>
-      </span>
-    </section>
-    <button @click="toggleUpdate()" class="btn">
-      {{ toggle ? "CANCEL" : "UPDATE" }}
-    </button>
+      <section v-if="userDetails" class="profile">
+        <span>
+          <p data-test="name">Name</p>
+          <h4>{{ userDetails.name.toUpperCase() }}</h4>
+        </span>
+        <span>
+          <p>Email</p>
+          <h4>{{ userDetails.email }}</h4>
+        </span>
+      </section>
+      <button @click="toggleUpdate()" id="btn1">
+        {{ toggle ? "CANCEL" : "UPDATE" }}
+      </button>
 
-    <div class="form-cont" v-if="toggle" data-test="toggle">
-      <form name="form" @submit.prevent="updateProfile()">
+      <div class="form-cont" v-if="toggle" data-test="toggle">
+        <!-- <form name="form" @submit.prevent="submit()"> -->
         <div>
           <label>Full Name:</label>
-          <input v-model="user.name" type="text" name="name" />
+          <input v-model="user.name" type="text" name="name" id="input1" />
         </div>
         <div>
           <label>Email:</label>
-          <input v-model="user.email" type="text" name="email" />
+          <input v-model="user.email" type="text" name="email" id="input2" />
         </div>
         <div v-if="errors.length" class="error">
           Please correct the following error(s):
@@ -50,12 +40,13 @@
           </ul>
         </div>
         <div>
-          <button class="btn">SUBMIT</button>
+          <button class="btn" @click="submit" id="btn2">SUBMIT</button>
         </div>
-      </form>
-    </div>
-    <div>
-      <button class="exit-btn btn" @click="exit()">EXIT</button>
+        <!-- </form> -->
+      </div>
+      <div>
+        <button class="exit-btn btn" @click="exit()" id="exit">EXIT</button>
+      </div>
     </div>
   </div>
 </template>
@@ -63,27 +54,25 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import NavBar from "../components/Navbar.vue";
+import ProfileSummary from "../components/Summary.vue";
 import { UpdateUser, ProfileUser } from "../utility/types";
 import { namespace } from "vuex-class";
 const User = namespace("User");
+import { updateProfile } from "../utility/validateEmail";
 
 @Component({
   components: {
     NavBar,
+    ProfileSummary,
   },
 })
 export default class Home extends Vue {
-  public toggle = false;
-
-  public user: UpdateUser = {
+  private toggle = false;
+  public user = {
     name: "",
     email: "",
   };
   private errors: Array<string> = [];
-
-  AccoountNum(): number {
-    return Math.floor(Math.random() * 1000000000);
-  }
 
   @User.Action
   private update!: (data: UpdateUser) => void;
@@ -99,29 +88,19 @@ export default class Home extends Vue {
     this.$router.push("/login");
   }
 
-  updateProfile(): void {
+  submit(): void {
     const user = {
       name: this.user.name,
       email: this.user.email,
       id: this.userDetails.id,
     };
     this.errors = [];
+    updateProfile(this.errors, this.user.email, this.user.name);
 
-    if (!this.user.email) {
-      this.errors.push("Email required");
-    } else if (!this.validEmail(this.user.email)) {
-      this.errors.push("valid email required");
-    }
     if (!this.errors.length) {
       this.update(user);
       this.toggle = false;
     }
-  }
-
-  validEmail(email: string): boolean {
-    var re =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
   }
 }
 </script>
@@ -160,7 +139,6 @@ input {
   border-radius: 12px;
   border: none;
 }
-.summary-cont,
 .profile {
   display: flex;
   justify-content: space-around;

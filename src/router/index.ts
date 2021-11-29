@@ -5,29 +5,29 @@ Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
+    path: "/",
+    redirect: "/register",
+  },
+  {
     path: "/dashbord",
     name: "Home",
-    // redirect: "/register",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Home.vue"),
+    component: () => import("../views/Home.vue"),
   },
   {
     path: "/register",
     name: "Register",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Register.vue"),
+    component: () => import("../views/Register.vue"),
   },
   {
     path: "/login",
     name: "Login",
-    // redirect: "/register",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Login.vue"),
+    component: () => import("../views/Login.vue"),
   },
-  { path: "/:notFound(.*)", redirect: "/login" },
+  {
+    path: "/:notFound(.*)",
+    name: "NotFound",
+    component: () => import("../views/NotFound.vue"),
+  },
 ];
 
 const router = new VueRouter({

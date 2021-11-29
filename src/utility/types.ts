@@ -13,6 +13,6 @@ export interface LoginUser {
 }
 
 export interface UpdateUser {
-  email: string;
-  name: string;
+  email?: string;
+  name?: string;
 }

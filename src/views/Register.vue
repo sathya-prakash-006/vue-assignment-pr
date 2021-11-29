@@ -7,22 +7,42 @@
     <div>
       <h1 data-test="create-account">Create an Account</h1>
       <div>
-        <form name="form" @submit.prevent="handleRegister">
+        <form name="form" @submit.prevent="submit">
           <div>
             <label>Fullname:</label>
-            <input v-model="user.name" type="text" name="name"  data-test="name" />
+            <input
+              v-model="user.name"
+              type="text"
+              name="name"
+              data-test="name"
+            />
           </div>
           <div>
             <label>Date of incorparation:</label>
-            <input v-model="user.date" type="date" name="date" />
+            <input
+              v-model="user.date"
+              type="date"
+              name="date"
+              data-test="date"
+            />
           </div>
           <div>
             <label>Email:</label>
-            <input v-model="user.email" type="text" name="email" />
+            <input
+              v-model="user.email"
+              type="text"
+              name="email"
+              data-test="email"
+            />
           </div>
           <div>
             <label>Password:</label>
-            <input v-model="user.password" type="password" name="password" />
+            <input
+              v-model="user.password"
+              type="password"
+              name="password"
+              data-test="password"
+            />
           </div>
           <div>
             <label>Confirm Password:</label>
@@ -30,6 +50,7 @@
               v-model="user.confirmpassword"
               type="password"
               name="confirmpassword"
+              data-test="confirmpassword"
             />
           </div>
           <div v-if="errors.length" class="error" data-test="error">
@@ -39,7 +60,7 @@
             </ul>
           </div>
           <div>
-            <button>Create an Account</button>
+            <button type="submit">Create an Account</button>
           </div>
           <router-link to="/login">Already have an Account? Login</router-link>
         </form>
@@ -50,11 +71,11 @@
 
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Vue, Component } from "vue-property-decorator";
 import { ProfileUser } from "../utility/types";
 import { namespace } from "vuex-class";
 const User = namespace("User");
-import { validEmail } from "../utility/validateEmail";
+import { validateRegisterInputs } from "../utility/validateEmail";
 
 @Component({
   components: {},
@@ -70,33 +91,22 @@ export default class Register extends Vue {
   private errors: Array<string> = [];
 
   @User.Action
-  // private createRegisterAction!: (data: any) => void;
   private register!: (data: ProfileUser) => void;
 
-  handleRegister(): void {
-    // error validation
-
-    //console.log(this.user);
+  submit(): void {
     this.errors = [];
+    this.$emit("submit", this.user);
+    validateRegisterInputs(
+      this.errors,
+      this.user.name,
+      this.user.email,
+      this.user.password,
+      this.user.confirmpassword
+    );
 
-    if (!this.user.name) {
-      this.errors.push("Name required");
-    }
-    if (!this.user.email) {
-      this.errors.push("Email required");
-    } else if (!validEmail(this.user.email)) {
-      this.errors.push("Enter valid Email Id");
-    }
-    if (
-      this.user.password !== this.user.confirmpassword ||
-      !this.user.password ||
-      !this.user.confirmpassword
-    ) {
-      this.errors.push("Entered password is not matching");
-    }
     if (!this.errors.length) {
       this.register(this.user);
-      this.$router.push("/login");
+      this.$router.push("/dashbord");
     }
   }
 }
