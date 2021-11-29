@@ -1,13 +1,13 @@
 import Home from "../../src/views/Home.vue";
 import { mount, createLocalVue } from "@vue/test-utils";
-import Vuex from "vuex";
+import Vuex, { Store } from "vuex";
 import { VueConstructor } from "vue";
 
 let localVue: VueConstructor<Vue>;
 
 describe("Home.vue", () => {
   let actions: any;
-  let store: any;
+  let store: Store<any>;
 
   localVue = createLocalVue();
   localVue.use(Vuex);
@@ -36,6 +36,7 @@ describe("Home.vue", () => {
 
   it("when button clicked it should redirect to home", async () => {
     const mockRouter = {
+      replace: jest.fn(),
       push: jest.fn(),
     };
 
