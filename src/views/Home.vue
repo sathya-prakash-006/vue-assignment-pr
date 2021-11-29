@@ -24,25 +24,25 @@
       </button>
 
       <div class="form-cont" v-if="toggle" data-test="toggle">
-        <!-- <form name="form" @submit.prevent="submit()"> -->
-        <div>
-          <label>Full Name:</label>
-          <input v-model="user.name" type="text" name="name" id="input1" />
-        </div>
-        <div>
-          <label>Email:</label>
-          <input v-model="user.email" type="text" name="email" id="input2" />
-        </div>
-        <div v-if="errors.length" class="error">
-          Please correct the following error(s):
-          <ul>
-            <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
-          </ul>
-        </div>
-        <div>
-          <button class="btn" @click="submit" id="btn2">SUBMIT</button>
-        </div>
-        <!-- </form> -->
+        <form name="form" @submit.prevent="submit()">
+          <div>
+            <label>Full Name:</label>
+            <input v-model="user.name" type="text" name="name" id="input1" />
+          </div>
+          <div>
+            <label>Email:</label>
+            <input v-model="user.email" type="text" name="email" id="input2" />
+          </div>
+          <div v-if="errors.length" class="error">
+            Please correct the following error(s):
+            <ul>
+              <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
+            </ul>
+          </div>
+          <div>
+            <button class="btn" type="submit" id="btn2">SUBMIT</button>
+          </div>
+        </form>
       </div>
       <div>
         <button class="exit-btn btn" @click="exit()" id="exit">EXIT</button>

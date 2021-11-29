@@ -9,7 +9,7 @@
       <div>
         <form name="form" @submit.prevent="submit">
           <div>
-            <label>Email:</label>
+            <label id="email">Email:</label>
             <input
               v-model="user.email"
               type="email"
