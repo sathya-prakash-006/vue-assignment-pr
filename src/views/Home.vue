@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="home">
     <div>
       <div v-if="userDetails">
         <nav-bar name="S"></nav-bar>
@@ -19,7 +19,7 @@
           <h4>{{ userDetails.email }}</h4>
         </span>
       </section>
-      <button @click="toggleUpdate()" id="btn1">
+      <button @click="toggleUpdate()" id="togglebtn">
         {{ toggle ? "CANCEL" : "UPDATE" }}
       </button>
 
@@ -105,7 +105,6 @@ export default class Home extends Vue {
       email: this.user.email,
       id: this.userDetails.id,
     };
-    this.errors = [];
     updateProfile(this.errors, this.user.email, this.user.name);
 
     if (!this.errors.length) {

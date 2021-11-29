@@ -9,7 +9,7 @@ describe("Login.vue", () => {
   let actions: any;
   let store: any;
   let wrapper: any;
-  let errors: Array<string> = [];
+  const errors: Array<string> = [];
 
   const mockRouter = {
     push: jest.fn(),
@@ -36,8 +36,8 @@ describe("Login.vue", () => {
   wrapper = mount(Login, {
     store,
     localVue,
-    props: {
-      errors: [],
+    propsData: {
+      errors: errors,
     },
     mocks: {
       $router: mockRouter,
@@ -47,6 +47,11 @@ describe("Login.vue", () => {
   it("it should have Login page on mount'", () => {
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.find("#login").exists()).toBe(true);
+    expect(wrapper.find("form").exists()).toBe(true);
+  });
+
+  it("form should contain input fields", () => {
+    expect(wrapper.get("input").exists()).toBe(true);
   });
   it("it should contain title 'Micro Bank'", () => {
     const title = wrapper.get('[data-test="title"]');
