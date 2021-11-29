@@ -8,6 +8,10 @@ describe("Navbar.vue", () => {
     wrapper = mount(ProfileSummary);
   });
 
+  it("it should have profileSummary page on mount'", () => {
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.find("#profile").exists()).toBe(true);
+  });
   it("it should have title Account Number ", () => {
     const name = "Account Number";
     const account = wrapper.get('[data-test="title"]');

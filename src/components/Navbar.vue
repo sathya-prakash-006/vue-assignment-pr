@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav id="navbar">
     <section data-test="nav-title">
       <span class="title1">Micro</span>
       <span class="title2">Bank</span>
@@ -18,8 +18,6 @@ export default class HelloWorld extends Vue {
   @Prop() private name!: string;
 }
 </script>
-
-
 
 <style scoped>
 nav {

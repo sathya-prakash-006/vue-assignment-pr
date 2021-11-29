@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" id="login">
     <div class="left-container">
       <div class="logo-container"></div>
       <h1 data-test="title">Micro Bank</h1>
@@ -64,7 +64,7 @@ export default class Login extends Vue {
 
   submit(): void {
     this.errors = [];
-     this.$emit("submit", this.user);
+    this.$emit("submit", this.user);
 
     validInputs(this.errors, this.user.email, this.user.password);
 

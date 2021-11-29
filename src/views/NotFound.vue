@@ -1,7 +1,8 @@
 <template>
-  <h1 data-test="title">Page Not Found</h1>
+  <div id="notFound">
+    <h1 data-test="title">Page Not Found</h1>
+  </div>
 </template>
-
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
@@ -12,7 +13,4 @@ import { Component, Vue } from "vue-property-decorator";
 export default class NotFound extends Vue {}
 </script>
 
-
-
-<style scoped>
-</style>
+<style scoped></style>

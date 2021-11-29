@@ -2,6 +2,11 @@ import { shallowMount, mount } from "@vue/test-utils";
 import Navbar from "@/components/Navbar.vue";
 
 describe("Navbar.vue", () => {
+  it("it should have navbar page on mount'", () => {
+    const wrapper = mount(Navbar);
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.find("#navbar").exists()).toBe(true);
+  });
   it("renders props.name when passed", () => {
     const name = "text";
     const wrapper = shallowMount(Navbar, {
