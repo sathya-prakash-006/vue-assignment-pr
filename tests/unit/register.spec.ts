@@ -10,6 +10,10 @@ describe("Register.vue", () => {
   it("it should have Register page on mount'", () => {
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.find("#register").exists()).toBe(true);
+    expect(wrapper.find("form").exists()).toBe(true);
+  });
+  it("form should contain input fields", () => {
+    expect(wrapper.get("input").exists()).toBe(true);
   });
   it("it should contain title 'Mocro Bank'", () => {
     const title = wrapper.get('[data-test="title"]');

@@ -25,7 +25,13 @@ describe("Home.vue", () => {
       },
     });
   });
+  it("it should have Home page on mount'", () => {
+    const wrapper = mount(Home, { store, localVue });
 
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.find("#home").exists()).toBe(true);
+ 
+  });
   it('it shoud have title "PROFILE DETAILS" ', async () => {
     const wrapper = mount(Home, { store, localVue });
 
@@ -73,23 +79,22 @@ describe("Home.vue", () => {
     expect(mockRouter.push).toHaveBeenCalledTimes(1);
     expect(mockRouter.push).toHaveBeenCalledWith("/register");
   });
+
+  // it("it should not call action ", async () => {
+  //   const toggleSpy = jest.fn();
+  //   const wrapper = mount(Home, {
+  //     store,
+  //     localVue,
+  //     propsData: {
+  //       toggle: false,
+  //       errors: [],
+  //     },
+  //     methods: {
+  //       toggleUpdate: toggleSpy,
+  //     },
+  //   });
+
+  //   await wrapper.find("#togglebtn").trigger("click");
+  //   expect().toBeCalled();
+  // });
 });
-
-// it('calls store action "moduleActionClick" when button is clicked', async () => {
-//   const name = "sathya";
-//   const email = "sathya@gmail.com";
-//   const wrapper = mount(Home, {
-//     store,
-//     localVue,
-//     propsData: {
-//       toggle: false,
-//     },
-//   });
-
-//   await wrapper.find("#btn1").trigger("click");
-//   await wrapper.find("#input1").setValue(name);
-//   await wrapper.find("#input2").setValue(email);
-//   await wrapper.find("#btn2").trigger("click");
-
-//   expect(actions.update).toHaveBeenCalled();
-// });

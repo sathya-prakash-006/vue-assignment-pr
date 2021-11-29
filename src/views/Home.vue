@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="home">
     <div>
       <div v-if="userDetails">
         <nav-bar name="S"></nav-bar>
@@ -19,7 +19,7 @@
           <h4>{{ userDetails.email }}</h4>
         </span>
       </section>
-      <button @click="toggleUpdate()" id="btn1">
+      <button @click="toggleUpdate()" id="togglebtn">
         {{ toggle ? "CANCEL" : "UPDATE" }}
       </button>
 
