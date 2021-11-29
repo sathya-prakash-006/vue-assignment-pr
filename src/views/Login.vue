@@ -65,7 +65,6 @@ export default class Login extends Vue {
   submit(): void {
     this.errors = [];
     this.$emit("submit", this.user);
-
     validInputs(this.errors, this.user.email, this.user.password);
 
     if (!this.errors.length) {
