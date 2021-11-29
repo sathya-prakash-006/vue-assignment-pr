@@ -9,7 +9,7 @@ describe("Login.vue", () => {
   let actions: any;
   let store: any;
   let wrapper: any;
-  let errors: Array<string> = [];
+  const errors: Array<string> = [];
 
   const mockRouter = {
     push: jest.fn(),
@@ -36,8 +36,8 @@ describe("Login.vue", () => {
   wrapper = mount(Login, {
     store,
     localVue,
-    props: {
-      errors: [],
+    propsData: {
+      errors: errors,
     },
     mocks: {
       $router: mockRouter,

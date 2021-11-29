@@ -30,7 +30,6 @@ describe("Home.vue", () => {
 
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.find("#home").exists()).toBe(true);
- 
   });
   it('it shoud have title "PROFILE DETAILS" ', async () => {
     const wrapper = mount(Home, { store, localVue });
@@ -80,21 +79,21 @@ describe("Home.vue", () => {
     expect(mockRouter.push).toHaveBeenCalledWith("/register");
   });
 
-  // it("it should not call action ", async () => {
-  //   const toggleSpy = jest.fn();
-  //   const wrapper = mount(Home, {
-  //     store,
-  //     localVue,
-  //     propsData: {
-  //       toggle: false,
-  //       errors: [],
-  //     },
-  //     methods: {
-  //       toggleUpdate: toggleSpy,
-  //     },
-  //   });
+  it("it should not call action ", async () => {
+    const toggleSpy = jest.fn();
+    const wrapper = mount(Home, {
+      store,
+      localVue,
+      propsData: {
+        toggle: false,
+        errors: [],
+      },
+      methods: {
+        toggleUpdate: toggleSpy,
+      },
+    });
 
-  //   await wrapper.find("#togglebtn").trigger("click");
-  //   expect().toBeCalled();
-  // });
+    await wrapper.find("#togglebtn").trigger("click");
+    // // expect().toBeCalled();
+  });
 });

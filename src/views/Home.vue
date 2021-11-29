@@ -105,7 +105,6 @@ export default class Home extends Vue {
       email: this.user.email,
       id: this.userDetails.id,
     };
-    this.errors = [];
     updateProfile(this.errors, this.user.email, this.user.name);
 
     if (!this.errors.length) {
