@@ -21,4 +21,12 @@ describe("Navbar.vue", () => {
 
     expect(navtitle.text()).toBe("Micro Bank");
   });
+  it("should have .profile, .left-section, .title1, .title2 classes", () => {
+    const wrapper = mount(Navbar);
+
+    expect(wrapper.find(".profile").exists()).toBe(true);
+    expect(wrapper.find(".left-section").exists()).toBe(true);
+    expect(wrapper.find(".title1").exists()).toBe(true);
+    expect(wrapper.find(".title2").exists()).toBe(true);
+  });
 });

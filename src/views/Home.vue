@@ -23,7 +23,7 @@
         {{ toggle ? "CANCEL" : "UPDATE" }}
       </button>
 
-      <div class="form-cont" v-if="toggle" data-test="toggle">
+      <div class="form-cont" v-if="toggle" id="toggle">
         <form name="form" @submit.prevent="submit()">
           <div>
             <label>Full Name:</label>
@@ -74,7 +74,7 @@ import { updateProfile } from "../utility/validateEmail";
   },
 })
 export default class Home extends Vue {
-  private toggle = false;
+  public toggle = false;
   public user = {
     name: "",
     email: "",

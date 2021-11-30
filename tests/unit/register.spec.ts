@@ -1,8 +1,10 @@
-import { mount } from "@vue/test-utils";
+import { mount, Wrapper } from "@vue/test-utils";
 import Register from "../../src/views/Register.vue";
+import { validateRegisterInputs } from "@/utility/validateEmail";
 
 describe("Register.vue", () => {
   let wrapper: any;
+
   beforeEach(() => {
     wrapper = mount(Register);
   });
@@ -25,6 +27,14 @@ describe("Register.vue", () => {
     const createaccount = wrapper.get('[data-test="create-account"]');
 
     expect(createaccount.text()).toBe("Create an Account");
+  });
+  it("should have .container, .left-container, .logo-container  class", () => {
+    expect(wrapper.find(".container").exists()).toBe(true);
+    expect(wrapper.find(".left-container").exists()).toBe(true);
+    expect(wrapper.find(".logo-container").exists()).toBe(true);
+  });
+  it("should have #register id", () => {
+    expect(wrapper.find("#register").exists()).toBe(true);
   });
 
   it("it should not render a error block", () => {
@@ -84,5 +94,62 @@ describe("Register.vue", () => {
       password,
       confirmpassword,
     });
+  });
+
+  it("it will give error length 0 if email and validation success", async () => {
+    const name = "sathya";
+    const email = "sathya@gmail.com";
+    const date = "";
+    const password = "123";
+    const confirmpassword = "123";
+
+    const errors: any = [];
+
+    await wrapper.get('[data-test="name"]').setValue(name);
+    await wrapper.get('[data-test="email"]').setValue(email);
+    await wrapper.find('input[type="date"]').setValue(date);
+    await wrapper.get('[data-test="password"]').setValue(password);
+    await wrapper
+      .get('[data-test="confirmpassword"]')
+      .setValue(confirmpassword);
+
+    await wrapper.find("form").trigger("submit.prevent");
+    await validateRegisterInputs(
+      errors,
+      name,
+      email,
+      password,
+      confirmpassword
+    );
+
+    expect(errors.length).toBe(0);
+  });
+  it("it will give error length 2 if email and name empty", async () => {
+    const name = "";
+    const email = "";
+    const date = "";
+    const password = "123";
+    const confirmpassword = "123";
+
+    const errors: any = [];
+
+    await wrapper.get('[data-test="name"]').setValue(name);
+    await wrapper.get('[data-test="email"]').setValue(email);
+    await wrapper.find('input[type="date"]').setValue(date);
+    await wrapper.get('[data-test="password"]').setValue(password);
+    await wrapper
+      .get('[data-test="confirmpassword"]')
+      .setValue(confirmpassword);
+
+    await wrapper.find("form").trigger("submit.prevent");
+    await validateRegisterInputs(
+      errors,
+      name,
+      email,
+      password,
+      confirmpassword
+    );
+
+    expect(errors.length).toBe(2);
   });
 });

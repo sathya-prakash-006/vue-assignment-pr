@@ -2,6 +2,7 @@ import { mount, createLocalVue } from "@vue/test-utils";
 import Login from "../../src/views/Login.vue";
 import Vuex from "vuex";
 import { VueConstructor } from "vue";
+import { validInputs } from "../../src/utility/validateEmail";
 
 let localVue: VueConstructor<Vue>;
 
@@ -9,6 +10,7 @@ describe("Login.vue", () => {
   let actions: any;
   let store: any;
   let wrapper: any;
+
   const errors: Array<string> = [];
 
   const mockRouter = {
@@ -103,7 +105,35 @@ describe("Login.vue", () => {
     });
   });
 
-  xit("on submitting redirect to dashbord", async () => {
+  it("it will give error length 0 if email and validation success", async () => {
+    const email = "sathya@gmail.com";
+    const password = "123";
+    const errors: any = [];
+
+    await wrapper.find('input[type="email"]').setValue(email);
+    await wrapper.find('input[type="password"]').setValue(password);
+    await wrapper.find("form").trigger("submit.prevent");
+    await validInputs(errors, email, password);
+
+    expect(errors.length).toBe(0);
+  });
+  it("it will give error length 1 if email or password empty", async () => {
+    const email = "";
+    const password = "123";
+    const errors: Array<string> = [];
+
+    await wrapper.find('input[type="email"]').setValue(email);
+    await wrapper.find('input[type="password"]').setValue(password);
+    await wrapper.find("form").trigger("submit.prevent");
+    await validInputs(errors, email, password);
+
+    expect(errors.length).toBe(1);
+    // expect(mockRouter.push).toHaveBeenCalledTimes(1);
+    // expect(actions.login).toHaveBeenCalled();
+    //expect(mockRouter.push).toHaveBeenCalledWith("/home");
+  });
+
+  xit("it should call login action", async () => {
     const email = "sathya@gmail.com";
     const password = "123";
 
@@ -111,7 +141,25 @@ describe("Login.vue", () => {
     await wrapper.find('input[type="password"]').setValue(password);
     await wrapper.find("form").trigger("submit.prevent");
 
-    expect(mockRouter.push).toHaveBeenCalledTimes(1);
+    expect(wrapper.emitted("submit")[0][0]).toStrictEqual({
+      email,
+      password,
+    });
+  });
+
+  xit("it should redirect to home", async () => {
+    const email = "sathya@gmail.com";
+    const password = "123";
+    //const errors: Array<string> = [];
+
+    await wrapper.find('input[type="email"]').setValue(email);
+    await wrapper.find('input[type="password"]').setValue(password);
+    await wrapper.find("form").trigger("submit.prevent");
+    //await validInputs(errors, email, password);
+
+    //expect(errors.length).toBe(1);
+    //expect(mockRouter.push).toHaveBeenCalledTimes(1);
+    //expect(actions.login).toHaveBeenCalled();
     expect(mockRouter.push).toHaveBeenCalledWith("/home");
   });
 });

@@ -79,21 +79,45 @@ describe("Home.vue", () => {
     expect(mockRouter.push).toHaveBeenCalledWith("/register");
   });
 
-  it("it should not call action ", async () => {
-    const toggleSpy = jest.fn();
+  it("it should toggle the button ", async () => {
     const wrapper = mount(Home, {
       store,
       localVue,
-      propsData: {
-        toggle: false,
-        errors: [],
-      },
-      methods: {
-        toggleUpdate: toggleSpy,
-      },
     });
 
     await wrapper.find("#togglebtn").trigger("click");
-    // // expect().toBeCalled();
+    expect(wrapper.find("#toggle").exists()).toBe(true);
+    await wrapper.find("#togglebtn").trigger("click");
+    expect(wrapper.find("#toggle").exists()).toBe(false);
   });
+
+    it("it should toggle", async () => {
+      const wrapper = mount(Home, {
+        store,
+        localVue,
+      });
+      await wrapper.setData({
+        toggle: false,
+      });
+
+      await wrapper.find("#toggle").trigger("click");
+      expect(wrapper.vm.toggle).toBe(true);
+    });
+  });
+
+  // it("it should not call action ", async () => {
+  //   const toggleSpy = jest.fn();
+  //   const wrapper = mount(Home, {
+  //     store,
+  //     localVue,
+  //     propsData: {
+  //       toggle: false,
+  //       errors: [],
+  //     },
+  //     methods: {
+  //       toggleUpdate: toggleSpy,
+  //     },
+  //   });
+
+  //   await wrapper.find("#togglebtn").trigger("click");
 });
