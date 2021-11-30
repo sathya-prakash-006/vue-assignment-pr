@@ -1,8 +1,12 @@
-import { shallowMount, mount } from "@vue/test-utils";
+import { shallowMount, mount, Wrapper } from "@vue/test-utils";
 import ProfileSummary from "@/components/Summary.vue";
 
 describe("Navbar.vue", () => {
-  let wrapper: any;
+  let wrapper: Wrapper<
+    ProfileSummary & {
+      [key: string]: any;
+    }
+  >;
 
   beforeEach(() => {
     wrapper = mount(ProfileSummary);
@@ -47,5 +51,12 @@ describe("Navbar.vue", () => {
     const name = "4275";
     const spends = wrapper.get('[data-test="spendsblnc"]');
     expect(spends.text()).toBe(name);
+  });
+
+  it("should have summary-cont class", () => {
+    expect(wrapper.find(".summary-cont").exists()).toBe(true);
+  });
+  it("should have #profile id", () => {
+    expect(wrapper.find("#profile").exists()).toBe(true);
   });
 });
